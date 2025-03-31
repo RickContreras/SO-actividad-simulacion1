@@ -41,7 +41,7 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    | cpu         | cpu      |
 
 
-   Al ejecutar el comando con las banderas -c y -p:
+   Al ejecutar el comando con las banderas `-c` y `-p`:
 
    ```bash
    python3 ./process-run.py -l 5:100,5:100 -c -p
@@ -73,7 +73,7 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    Análisis:
 
    - En la primera ejecución, se observa cómo cada proceso utiliza la CPU de manera secuencial, pero no se detalla cómo el sistema operativo gestiona el cambio de procesos.
-   - En la segunda ejecución, con las banderas -c y -p, se muestra explícitamente el estado de cada proceso en cada unidad de tiempo. Esto permite observar cómo los procesos se turnan para usar la CPU.
+   - En la segunda ejecución, con las banderas `-c` y `-p`, se muestra explícitamente el estado de cada proceso en cada unidad de tiempo. Esto permite observar cómo los procesos se turnan para usar la CPU.
    - La CPU está ocupada durante todo el tiempo de ejecución, lo que resulta en una utilización del 100%. No hay operaciones de I/O, por lo que el tiempo ocupado por I/O es 0%.
    
    En resumen, esta simulación demuestra cómo los procesos se alternan en el uso de la CPU y cómo el sistema operativo gestiona su ejecución de manera eficiente.
@@ -97,10 +97,10 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    |------------------------|-------------------|
    | cpu         | io      |
    | cpu         | io_done      |
-   | cpu         | cpu      |
-   | cpu         | cpu      |
+   | cpu         |      |
+   | cpu         |      |
 
-   Al ejecutar el comando con las banderas -c y -p:
+   Al ejecutar el comando con las banderas `-c` y `-p`:
 
    ```bash
    python3 process-run.py -l 4:100,1:0 -c -p
@@ -131,10 +131,10 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    Análisis:
 
-   - El Proceso 0 utiliza la CPU durante 4 unidades de tiempo consecutivas y finaliza.
-   - El Proceso 1 realiza una operación de I/O, lo que bloquea su ejecución durante 5 unidades de tiempo hasta que la operación de I/O se completa.
-   - La CPU está ocupada durante 6 de las 11 unidades de tiempo, lo que resulta en una utilización del 54.55%.
-   - La I/O está ocupada durante 5 de las 11 unidades de tiempo, lo que resulta en una utilización del 45.45%.
+   - El **Proceso 0** utiliza la CPU durante 4 unidades de tiempo consecutivas y finaliza.
+   - El **Proceso 1** realiza una operación de I/O, lo que bloquea su ejecución durante 5 unidades de tiempo hasta que la operación de I/O se completa.
+   - La CPU está ocupada durante 6 de las 11 unidades de tiempo, lo que resulta en una utilización del **54.55%**.
+   - La I/O está ocupada durante 5 de las 11 unidades de tiempo, lo que resulta en una utilización del **45.45%**.
    
    En resumen, esta simulación muestra cómo el sistema operativo gestiona los procesos que realizan operaciones de I/O. Este caso ilustra un escenario ideal donde la CPU se asigna a otro proceso tan pronto como el proceso actual ha finalizado completamente, maximizando así la eficiencia del uso de los recursos del sistema.
 
