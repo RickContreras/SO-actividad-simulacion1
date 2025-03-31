@@ -145,7 +145,56 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+
+   Al ejecutar el comando:
+
+   ```bash
+   python3 ./process-run.py -l 1:0,4:100
+   ```
+
+   Se observa que el Proceso 0 realiza una operación de I/O y espera a que esta finalice, mientras que el Proceso 1 utiliza la CPU para ejecutar 4 instrucciones. A continuación, se muestra cómo se distribuyen las instrucciones:
+
+   | **Process 0**         | **Process 1**         |
+   |------------------------|-------------------|
+   | io         | cpu      |
+   | io_done         | cpu      |
+   |         |   cpu   |
+   |         |   cpu   |
+
+   Al ejecutar el comando con las banderas `-c` y `-p`:
+
+   ```bash
+   python3 ./process-run.py -l 1:0,4:100 -c -p
+   ```
+
+   Se genera la siguiente traza, que detalla el estado de los procesos en cada unidad de tiempo:
+
+   | Tiempo | PID: 0         | PID: 1         | CPU | I/O |
+   |--------|----------------|----------------|-----|-----|
+   | 1      | RUN:io         | READY          | 1   |     |
+   | 2      | BLOCKED        | RUN:cpu        | 1   |  1  |
+   | 3      | BLOCKED        | RUN:cpu        | 1   |  1  |
+   | 4      | BLOCKED        | RUN:cpu        | 1   |  1  |
+   | 5      | BLOCKED        | RUN:cpu        | 1   |  1  |
+   | 6      | BLOCKED        | DONE           |     |  1  |
+   | 7*     | RUN:io_done    | DONE           | 1   |     |
+
+   **Estadísticas:**
+   | Métrica         | Valor         |
+   |------------------|---------------|
+   | Tiempo total     | 7 unidades   |
+   | CPU ocupada      | 6 unidades   |
+   | I/O ocupada      | 5 unidades    |
+   
+   Análisis:
+
+   - El **Proceso 0** realiza una operación de I/O en la primera unidad de tiempo y queda bloqueado durante 5 unidades de tiempo mientras espera que la operación de I/O finalice.
+   - El **Proceso 1** utiliza la CPU durante 4 unidades de tiempo consecutivas y finaliza antes de que el Proceso 0 complete su operación de I/O.
+   - La CPU está ocupada durante 6 de las 7 unidades de tiempo, lo que resulta en una utilización del **85.71%**.
+   - La I/O está ocupada durante 5 de las 7 unidades de tiempo, lo que resulta en una utilización del **71.43%**.
+
+   En resumen, esta simulación muestra cómo el sistema operativo prioriza el uso de la CPU para procesos listos mientras otros procesos están bloqueados esperando operaciones de I/O. Esto asegura un uso eficiente de los recursos del sistema.
+
    </details>
    <br>
 
