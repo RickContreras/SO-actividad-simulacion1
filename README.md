@@ -72,9 +72,10 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
 
    Análisis:
 
-   En la primera ejecución, se observa cómo cada proceso utiliza la CPU de manera secuencial, pero no se detalla cómo el sistema operativo gestiona el cambio de procesos.
-   En la segunda ejecución, con las banderas -c y -p, se muestra explícitamente el estado de cada proceso en cada unidad de tiempo. Esto permite observar cómo los procesos se turnan para usar la CPU.
-   La CPU está ocupada durante todo el tiempo de ejecución, lo que resulta en una utilización del 100%. No hay operaciones de I/O, por lo que el tiempo ocupado por I/O es 0%.
+   - En la primera ejecución, se observa cómo cada proceso utiliza la CPU de manera secuencial, pero no se detalla cómo el sistema operativo gestiona el cambio de procesos.
+   - En la segunda ejecución, con las banderas -c y -p, se muestra explícitamente el estado de cada proceso en cada unidad de tiempo. Esto permite observar cómo los procesos se turnan para usar la CPU.
+   - La CPU está ocupada durante todo el tiempo de ejecución, lo que resulta en una utilización del 100%. No hay operaciones de I/O, por lo que el tiempo ocupado por I/O es 0%.
+   
    En resumen, esta simulación demuestra cómo los procesos se alternan en el uso de la CPU y cómo el sistema operativo gestiona su ejecución de manera eficiente.
 
    </details>
@@ -84,7 +85,59 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+   Al ejecutar el comando:
+
+   ```bash
+   python3 process-run.py -l 4:100,1:0
+   ```
+
+   Se observa que el Proceso 0 realiza 4 instrucciones en la CPU, mientras que el Proceso 1 realiza una operación de I/O y espera a que esta finalice. A continuación, se muestra cómo se distribuyen las instrucciones:
+
+   | **Process 0**         | **Process 1**         |
+   |------------------------|-------------------|
+   | cpu         | io      |
+   | cpu         | io_done      |
+   | cpu         | cpu      |
+   | cpu         | cpu      |
+
+   Al ejecutar el comando con las banderas -c y -p:
+
+   ```bash
+   python3 process-run.py -l 4:100,1:0 -c -p
+   ```
+
+   Se genera la siguiente traza, que detalla el estado de los procesos en cada unidad de tiempo:
+
+   | Tiempo | PID: 0         | PID: 1         | CPU | I/O |
+   |--------|----------------|----------------|-----|-----|
+   | 1      | RUN:cpu        | READY          | 1   |     |
+   | 2      | RUN:cpu        | READY          | 1   |     |
+   | 3      | RUN:cpu        | READY          | 1   |     |
+   | 4      | RUN:cpu        | READY          | 1   |     |
+   | 5      | DONE           | RUN:io         | 1   |     |
+   | 6      | DONE           | BLOCKED        |    |   1  |
+   | 7      | DONE           | BLOCKED        |    |   1  |
+   | 8      | DONE           | BLOCKED        |    |   1  |
+   | 9      | DONE           | BLOCKED        |    |   1  |
+   | 10     | DONE           | BLOCKED        |    |   1  |
+   | 11*    | DONE           | RUN:io_done    | 1   |     |
+
+   **Estadísticas:**
+   | Métrica         | Valor         |
+   |------------------|---------------|
+   | Tiempo total     | 11 unidades   |
+   | CPU ocupada      | 6 unidades   |
+   | I/O ocupada      | 5 unidades    |
+   
+   Análisis:
+
+   - El Proceso 0 utiliza la CPU durante 4 unidades de tiempo consecutivas y finaliza.
+   - El Proceso 1 realiza una operación de I/O, lo que bloquea su ejecución durante 5 unidades de tiempo hasta que la operación de I/O se completa.
+   - La CPU está ocupada durante 6 de las 11 unidades de tiempo, lo que resulta en una utilización del 54.55%.
+   - La I/O está ocupada durante 5 de las 11 unidades de tiempo, lo que resulta en una utilización del 45.45%.
+   
+   En resumen, esta simulación muestra cómo el sistema operativo gestiona los procesos que realizan operaciones de I/O. Este caso ilustra un escenario ideal donde la CPU se asigna a otro proceso tan pronto como el proceso actual ha finalizado completamente, maximizando así la eficiencia del uso de los recursos del sistema.
+
    </details>
    <br>
 
