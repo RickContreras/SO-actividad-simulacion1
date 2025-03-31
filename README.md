@@ -202,7 +202,55 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+   Al ejecutar el comando:
+
+   ```bash
+   python3 process-run.py -l 1:0,4:100 -c -S SWITCH_ON_END
+   ```
+
+   Se genera la siguiente traza, que detalla el estado de los procesos en cada unidad de tiempo:
+
+   ```bash
+   python3 ./process-run.py -l 1:0,4:100 -c -S SWITCH_ON_END
+   ```
+   |Time    | PID: 0        | PID: 1      | CPU  | IOs | 
+   |--------|--------------|------------|------|------|
+   |  1     | RUN:io      | READY      |  1   |      |
+   |  2     | BLOCKED     | READY      |      |  1   |
+   | 3     | BLOCKED     | READY      |      |  1   |
+   |  4     | BLOCKED     | READY      |      |  1   |
+   |  5     | BLOCKED     | READY      |      |  1   |
+   |  6     | BLOCKED     | READY      |      |  1   |
+   |  7*    | RUN:io_done | READY      |  1   |      |
+   |  8     | DONE        | RUN:cpu    |  1   |      |
+   |  9     | DONE        | RUN:cpu    |  1   |      |
+   | 10     | DONE        | RUN:cpu    |  1   |      |
+   | 11     | DONE        | RUN:cpu    |  1   |      |
+
+
+   ## Estadísticas
+
+   | Métrica         | Valor |
+   |----------------|-------|
+   | Tiempo total   | 11 unidades |
+   | CPU ocupada    | 6 unidades |
+   | I/O ocupada    | 5 unidades |
+
+   ## Análisis detallado
+
+   - El **Proceso 0** realiza una operación de I/O en la primera unidad de tiempo y queda bloqueado durante 5 unidades de tiempo mientras espera que la operación de I/O finalice.
+   - Durante este tiempo, el sistema no cambia al **Proceso 1**, ya que la bandera `SWITCH_ON_END` indica que no se debe cambiar de proceso hasta que el proceso actual haya terminado completamente.
+   - Una vez que el **Proceso 0** finaliza su operación de I/O, el **Proceso 1** utiliza la CPU durante 4 unidades de tiempo consecutivas y finaliza.
+   - La CPU está ocupada durante **6 de las 11 unidades de tiempo**, lo que resulta en una utilización del **54.55%**.
+   - La I/O está ocupada durante **5 de las 11 unidades de tiempo**, lo que resulta en una utilización del **45.45%**.
+
+   ## Conclusión
+
+   Este comportamiento **no es eficiente**, ya que el sistema permanece inactivo durante el tiempo en que el **Proceso 0** está bloqueado esperando la finalización de su operación de I/O. Esto demuestra que la bandera `SWITCH_ON_END` puede llevar a un uso ineficiente de los recursos del sistema, especialmente en escenarios donde hay procesos listos para ejecutarse mientras otros están bloqueados.  
+
+   En este caso, **permitir que el sistema cambie a otro proceso mientras uno está bloqueado** podría mejorar significativamente la utilización de la CPU y reducir el tiempo total de ejecución.
+
+
    </details>
    <br>
 
