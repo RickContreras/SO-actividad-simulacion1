@@ -24,7 +24,59 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+
+Al ejecutar el comando:
+
+```bash
+python3 ./process-run.py -l 5:100,5:100
+```
+
+Se observa que ambos procesos realizan únicamente operaciones en la CPU. A continuación, se muestra cómo se distribuyen las instrucciones:
+
+| **Process 0**         | **Process 1**         |
+|------------------------|-------------------|
+| cpu         | cpu      |
+| cpu         | cpu      |
+| cpu         | cpu      |
+| cpu         | cpu      |
+
+
+Al ejecutar el comando con las banderas -c y -p:
+
+```bash
+python3 ./process-run.py -l 5:100,5:100 -c -p
+```
+
+Se genera la siguiente traza, que detalla el estado de los procesos en cada unidad de tiempo:
+
+| Tiempo | PID: 0         | PID: 1         | CPU | I/O |
+|--------|----------------|----------------|-----|-----|
+| 1      | RUN:cpu        | READY          | 1   |     |
+| 2      | RUN:cpu        | READY          | 1   |     |
+| 3      | RUN:cpu        | READY          | 1   |     |
+| 4      | RUN:cpu        | READY          | 1   |     |
+| 5      | RUN:cpu        | READY          | 1   |     |
+| 6      | DONE           | RUN:cpu        | 1   |     |
+| 7      | DONE           | RUN:cpu        | 1   |     |
+| 8      | DONE           | RUN:cpu        | 1   |     |
+| 9      | DONE           | RUN:cpu        | 1   |     |
+| 10     | DONE           | RUN:cpu        | 1   |     |
+
+**Estadísticas:**
+| Métrica         | Valor         |
+|------------------|---------------|
+| Tiempo total     | 10 unidades   |
+| CPU ocupada      | 10 unidades   |
+| I/O ocupada      | 0 unidades    |
+
+
+Análisis:
+
+En la primera ejecución, se observa cómo cada proceso utiliza la CPU de manera secuencial, pero no se detalla cómo el sistema operativo gestiona el cambio de procesos.
+En la segunda ejecución, con las banderas -c y -p, se muestra explícitamente el estado de cada proceso en cada unidad de tiempo. Esto permite observar cómo los procesos se turnan para usar la CPU.
+La CPU está ocupada durante todo el tiempo de ejecución, lo que resulta en una utilización del 100%. No hay operaciones de I/O, por lo que el tiempo ocupado por I/O es 0%.
+En resumen, esta simulación demuestra cómo los procesos se alternan en el uso de la CPU y cómo el sistema operativo gestiona su ejecución de manera eficiente.
+
    </details>
    <br>
 
