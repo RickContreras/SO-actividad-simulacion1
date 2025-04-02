@@ -286,6 +286,7 @@ Se genera la siguiente traza, que detalla el estado de los procesos en cada unid
 | I/O ocupada | 5 unidades |
 
 #### 🔍 Análisis detallado:
+
 - En la primera unidad de tiempo, el Proceso 0 inicia su operación de I/O y queda bloqueado.
 
 - A partir del segundo ciclo, el sistema cambia inmediatamente al Proceso 1, ya que SWITCH_ON_IO permite el cambio cuando un proceso queda en estado de espera por I/O.
@@ -318,6 +319,71 @@ Se genera la siguiente traza, que detalla el estado de los procesos en cada unid
 python3 process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -c -p -I IO_RUN_LATER
 ```
 Se genera la siguiente traza, que detalla el estado de los procesos en cada unidad de tiempo:
+
+| Tiempo |	PID: 0	| PID: 1	| PID: 2	| PID: 3	| CPU	I/O |
+|:------:|:------:|:------:|:---:|:---:|
+| 1      | RUN:io  | READY  | READY  | READY  | 1   |     |
+| 2      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
+| 3      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
+| 4      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
+| 5      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
+| 6      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
+| 7*     | READY   | DONE    | RUN:cpu | READY  | 1   |     |
+| 8      | READY   | DONE    | RUN:cpu | READY  | 1   |     |
+| 9      | READY   | DONE    | RUN:cpu | READY  | 1   |     |
+| 10     | READY   | DONE    | RUN:cpu | READY  | 1   |     |
+| 11     | READY   | DONE    | RUN:cpu | READY  | 1   |     |
+| 12     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
+| 13     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
+| 14     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
+| 15     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
+| 16     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
+| 17     | RUN:io_done | DONE | DONE | DONE | 1 |     |
+| 18     | RUN:io | DONE | DONE | DONE | 1 |     |
+| 19     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 20     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 21     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 22     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 23     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 24*    | RUN:io_done | DONE | DONE | DONE | 1 |     |
+| 25     | RUN:io | DONE | DONE | DONE | 1 |     |
+| 26     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 27     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 28     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 29     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 30     | BLOCKED | DONE | DONE | DONE |   | 1   |
+| 31*    | RUN:io_done | DONE | DONE | DONE | 1 |     |
+
+#### 📈 Estadísticas:
+| Métrica        | Valor    |
+|---------------|---------|
+| Tiempo total  | 31      |
+| CPU ocupada   | 21 (67.74%) |
+| I/O ocupada   | 15 (48.39%) |
+
+#### 🔍 Análisis detallado:
+
+- En la primera unidad de tiempo, el Proceso 0 inicia una operación de I/O y queda bloqueado.
+
+- Como el sistema tiene SWITCH_ON_IO, el Proceso 1 toma la CPU y ejecuta sus instrucciones.
+
+- Cuando la operación de I/O de un proceso finaliza, con IO_RUN_LATER este no se ejecuta inmediatamente, sino que sigue en estado READY hasta que le toque su turno en la cola de ejecución.
+
+- Esto causa que la CPU siga ejecutando los otros procesos de CPU en lugar de atender al proceso que finalizó su operación de I/O.
+
+- La CPU se mantiene ocupada durante 21 de las 31 unidades de tiempo, lo que implica un uso del 67.74%.
+
+- La I/O estuvo ocupada durante 15 de las 31 unidades de tiempo, lo que representa un 48.39%.
+
+#### 💡 Conclusión:
+
+- El comportamiento de IO_RUN_LATER retrasa la ejecución de procesos que finalizan operaciones de I/O, permitiendo que otros procesos continúen en la CPU sin interrupción.
+
+- Este enfoque es eficiente para procesos de CPU intensivos, ya que permite que la CPU no se quede inactiva esperando la finalización de una operación de I/O.
+
+- Sin embargo, si un proceso depende de I/O frecuente, este comportamiento puede introducir demoras innecesarias, ya que el proceso que completó su operación de I/O tiene que esperar su turno para volver a ejecutarse.
+
+- Una posible optimización sería usar IO_RUN_IMMEDIATE, que permite que el proceso que termina su I/O reciba la CPU de inmediato, reduciendo tiempos de espera.
 
 </details>
 
