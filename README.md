@@ -5,7 +5,7 @@
 |Integrante|correo|usuario github|
 |---|---|---|
 | Ricardo Contreras Garzón | ricardo.contreras1@udea.edu.co | [RickContreras](https://github.com/RickContreras) |
-|Nombre completo integrante 2|correo integrante 2|[*github user integrante 2*](https://github.com/)|
+| Santiago Arenas Gómez | santiago.arenas1@udea.edu.co |[Sag0719](https://github.com/Sag0719)|
 
 ## Instrucciones
 
@@ -266,7 +266,45 @@ En este caso, **permitir que el sistema cambie a otro proceso mientras uno está
 ```bash
 python3 process-run.py -l 1:0,4:100 -c -S SWITCH_ON_IO
 ```
+Se genera la siguiente traza, que detalla el estado de los procesos en cada unidad de tiempo:
 
+| Tiempo | PID: 0 | PID: 1 | CPU | I/O |
+|:------:|:------:|:------:|:---:|:---:|
+| 1 | RUN:io | READY | 1 | |
+| 2 | BLOCKED | RUN:cpu | | 1 |
+| 3 | BLOCKED | RUN:cpu | | 1 |
+| 4 | BLOCKED | RUN:cpu | | 1 |
+| 5 | BLOCKED | RUN:cpu | | 1 |
+| 6 | BLOCKED | DONE | | 1 |
+| 7* | RUN:io_done | DONE | 1 | |
+
+#### 📈 Estadísticas:
+| Métrica | Valor |
+|:-------:|:-----:|
+| Tiempo total | 7 unidades |
+| CPU ocupada | 6 unidades |
+| I/O ocupada | 5 unidades |
+
+#### 🔍 Análisis detallado:
+- En la primera unidad de tiempo, el Proceso 0 inicia su operación de I/O y queda bloqueado.
+
+- A partir del segundo ciclo, el sistema cambia inmediatamente al Proceso 1, ya que SWITCH_ON_IO permite el cambio cuando un proceso queda en estado de espera por I/O.
+
+- El Proceso 1 utiliza la CPU durante 4 unidades de tiempo hasta que finaliza su ejecución.
+
+- Después de que el Proceso 1 finaliza, la operación de I/O del Proceso 0 se completa en la unidad de tiempo 7.
+
+- La CPU está ocupada durante 6 de las 7 unidades de tiempo, lo que resulta en una utilización del 85.71%.
+
+- La I/O está ocupada durante 5 de las 7 unidades de tiempo, lo que resulta en una utilización del 71.43%.
+
+#### 💡 Conclusión:
+
+- En comparación con el caso anterior (SWITCH_ON_END), donde la CPU estuvo inactiva durante 5 unidades de tiempo, este enfoque permite que otro proceso utilice la CPU mientras el primero está bloqueado por I/O.
+
+- Esto mejora significativamente la eficiencia del sistema, reduciendo el tiempo total de ejecución de 11 a 7 unidades de tiempo.
+
+- La bandera SWITCH_ON_IO permite un mayor aprovechamiento de los recursos al evitar tiempos muertos cuando un proceso está en espera.
 </details>
 
 ### 6️⃣ Pregunta 6
@@ -279,6 +317,7 @@ python3 process-run.py -l 1:0,4:100 -c -S SWITCH_ON_IO
 ```bash
 python3 process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -c -p -I IO_RUN_LATER
 ```
+Se genera la siguiente traza, que detalla el estado de los procesos en cada unidad de tiempo:
 
 </details>
 
