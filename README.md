@@ -451,7 +451,6 @@ Esto es beneficioso en situaciones donde los procesos dependen fuertemente de I/
 </details>
    <br>
 
-
 ### Criterios de evaluación
 - [x] Despligue de los resultados y analisis claro de los resultados respecto a lo visto en la teoria.
 - [x] Creatividad y orden.
