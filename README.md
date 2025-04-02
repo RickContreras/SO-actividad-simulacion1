@@ -320,8 +320,8 @@ python3 process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -c -p -I IO_RUN_
 ```
 Se genera la siguiente traza, que detalla el estado de los procesos en cada unidad de tiempo:
 
-| Tiempo |	PID: 0	| PID: 1	| PID: 2	| PID: 3	| CPU	I/O |
-|:------:|:------:|:------:|:---:|:---:|
+| Tiempo | PID: 0	| PID: 1	| PID: 2	| PID: 3	| CPU	| I/O |
+|:------:|:------:|:------:|:------:|:------:|:---:|:---:|
 | 1 | RUN:io  | READY  | READY | READY | 1 | |
 | 2 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
 | 3 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
