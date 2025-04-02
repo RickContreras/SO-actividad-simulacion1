@@ -322,37 +322,37 @@ Se genera la siguiente traza, que detalla el estado de los procesos en cada unid
 
 | Tiempo |	PID: 0	| PID: 1	| PID: 2	| PID: 3	| CPU	I/O |
 |:------:|:------:|:------:|:---:|:---:|
-| 1      | RUN:io  | READY  | READY  | READY  | 1   |     |
-| 2      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
-| 3      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
-| 4      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
-| 5      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
-| 6      | BLOCKED | RUN:cpu | READY  | READY  | 1   | 1   |
-| 7*     | READY   | DONE    | RUN:cpu | READY  | 1   |     |
-| 8      | READY   | DONE    | RUN:cpu | READY  | 1   |     |
-| 9      | READY   | DONE    | RUN:cpu | READY  | 1   |     |
-| 10     | READY   | DONE    | RUN:cpu | READY  | 1   |     |
-| 11     | READY   | DONE    | RUN:cpu | READY  | 1   |     |
-| 12     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
-| 13     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
-| 14     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
-| 15     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
-| 16     | READY   | DONE    | DONE    | RUN:cpu | 1   |     |
-| 17     | RUN:io_done | DONE | DONE | DONE | 1 |     |
-| 18     | RUN:io | DONE | DONE | DONE | 1 |     |
-| 19     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 20     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 21     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 22     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 23     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 24*    | RUN:io_done | DONE | DONE | DONE | 1 |     |
-| 25     | RUN:io | DONE | DONE | DONE | 1 |     |
-| 26     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 27     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 28     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 29     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 30     | BLOCKED | DONE | DONE | DONE |   | 1   |
-| 31*    | RUN:io_done | DONE | DONE | DONE | 1 |     |
+| 1 | RUN:io  | READY  | READY | READY | 1 | |
+| 2 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 3 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 4 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 5 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 6 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 7* | READY | DONE | RUN:cpu | READY | 1 | |
+| 8 | READY | DONE | RUN:cpu | READY | 1 | |
+| 9 | READY | DONE | RUN:cpu | READY | 1 | |
+| 10 | READY | DONE | RUN:cpu | READY | 1 | |
+| 11 | READY | DONE | RUN:cpu | READY | 1 | |
+| 12 | READY | DONE | DONE | RUN:cpu | 1 | |
+| 13 | READY | DONE | DONE | RUN:cpu | 1 | |
+| 14 | READY | DONE | DONE | RUN:cpu | 1 | |
+| 15 | READY | DONE | DONE | RUN:cpu | 1 | |
+| 16 | READY | DONE | DONE | RUN:cpu | 1 | |
+| 17 | RUN:io_done | DONE | DONE | DONE | 1 | |
+| 18 | RUN:io | DONE | DONE | DONE | 1 | |
+| 19 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 20 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 21 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 22 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 23 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 24* | RUN:io_done | DONE | DONE | DONE | 1 | |
+| 25 | RUN:io | DONE | DONE | DONE | 1 | |
+| 26 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 27 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 28 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 29 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 30 | BLOCKED | DONE | DONE | DONE | | 1 |
+| 31* | RUN:io_done | DONE | DONE | DONE | 1 | |
 
 #### 📈 Estadísticas:
 | Métrica        | Valor    |
