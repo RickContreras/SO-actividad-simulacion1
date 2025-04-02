@@ -397,6 +397,56 @@ Se genera la siguiente traza, que detalla el estado de los procesos en cada unid
 ```bash
 python3 process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -c -p -I IO_RUN_IMMEDIATE
 ```
+Se genera la siguiente traza, que detalla el estado de los procesos en cada unidad de tiempo:
+
+| Tiempo | PID: 0 | PID: 1 | PID: 2 | PID: 3 | CPU | I/O |
+|:------:|:------:|:------:|:------:|:------:|:---:|:---:|
+| 1 | RUN:io | READY | READY | READY | 1 | |
+| 2 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 3 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 4 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 5 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 6 | BLOCKED | RUN:cpu | READY | READY | 1 | 1 |
+| 7* | RUN:io_done | DONE | READY | READY | 1 | |
+| 8 | RUN:io | DONE | READY  | READY | 1 | |
+| 9 | BLOCKED | DONE | RUN:cpu | READY | 1 | 1 |
+| 10 | BLOCKED | DONE | RUN:cpu | READY | 1 | 1 |
+| 11 | BLOCKED | DONE | RUN:cpu | READY | 1 | 1 |
+| 12 | BLOCKED | DONE | RUN:cpu | READY | 1 | 1 |
+| 13 | BLOCKED | DONE | RUN:cpu | READY | 1 | 1 |
+| 14* | RUN:io_done | DONE | DONE | READY | 1 | |
+| 15 | RUN:io | DONE | DONE | READY  | 1 | |
+| 16 | BLOCKED | DONE | DONE | RUN:cpu | 1 | 1 |
+| 17 | BLOCKED | DONE | DONE | RUN:cpu | 1 | 1 |
+| 18 | BLOCKED | DONE | DONE | RUN:cpu | 1 | 1 |
+| 19 | BLOCKED | DONE | DONE | RUN:cpu | 1 | 1 |
+| 20 | BLOCKED | DONE | DONE | RUN:cpu | 1 | 1 |
+| 21* | RUN:io_done | DONE | DONE | DONE | 1 | |
+
+#### 📈 Estadísticas:
+| Métrica        | Valor    |
+|---------------|---------|
+| Tiempo total  | 21      |
+| CPU ocupada   | 21 (100.00%) |
+| I/O ocupada   | 15 (71.43%) |
+
+#### 🔍 Análisis detallado:
+
+- Con IO_RUN_IMMEDIATE, el proceso que finaliza una operación de I/O se ejecuta inmediatamente después de completarla.
+
+- Esto contrasta con la ejecución anterior con IO_RUN_LATER, donde el proceso que terminaba la I/O tenía que esperar a que el proceso en ejecución terminara su tiempo en CPU.
+
+- En este caso, el tiempo total de ejecución se reduce de 31 a 21 unidades, lo que indica una mayor eficiencia.
+
+- La CPU estuvo ocupada el 100% del tiempo, eliminando periodos de inactividad.
+
+- La utilización de I/O también aumentó, pasando del 48.39% al 71.43%, lo que significa que se usó de manera más efectiva.
+
+#### 💡 Conclusión:
+
+Ejecutar inmediatamente un proceso que acaba de completar un I/O mejora significativamente el rendimiento del sistema al evitar tiempos muertos y aprovechar al máximo los recursos disponibles.
+
+Esto es beneficioso en situaciones donde los procesos dependen fuertemente de I/O, como en servidores web o sistemas interactivos, donde reducir la latencia es crucial.
 
 </details>
    <br>
