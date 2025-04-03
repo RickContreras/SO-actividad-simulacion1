@@ -261,7 +261,6 @@ Este comportamiento **no es eficiente**, ya que el sistema permanece inactivo du
 En este caso, **permitir que el sistema cambie a otro proceso mientras uno está bloqueado** podría mejorar significativamente la utilización de la CPU y reducir el tiempo total de ejecución.
 
 </details>
-   <br>
 
 ### 5️⃣ Pregunta 5
 
@@ -460,7 +459,6 @@ Ejecutar inmediatamente un proceso que acaba de completar un I/O mejora signific
 Esto es beneficioso en situaciones donde los procesos dependen fuertemente de I/O, como en servidores web o sistemas interactivos, donde reducir la latencia es crucial.
 
 </details>
-   <br>
 
 ### 🏆 Criterios de evaluación
 - [x] Despligue de los resultados y analisis claro de los resultados respecto a lo visto en la teoria.
