@@ -1,24 +1,26 @@
-# Actividad de seguimiento - Simulación 1
+# 🧪 Actividad de seguimiento - Simulación 1
 
 ![Universidad](https://img.shields.io/badge/Universidad-UdeA-green)
+
+## 👥 Integrantes
 
 |Integrante|correo|usuario github|
 |---|---|---|
 | Ricardo Contreras Garzón | ricardo.contreras1@udea.edu.co | [RickContreras](https://github.com/RickContreras) |
 | Santiago Arenas Gómez | santiago.arenas1@udea.edu.co |[Sag0719](https://github.com/Sag0719)|
 
-## Instrucciones
+## 📝 Instrucciones
 
 Antes de empezar a realizar esta actividad haga un **fork** de este repositorio y sobre este trabaje en la solución de las preguntas planteadas en la actividad de simulación. Las respuestas deben ser respondidas en español o si lo prefiere en ingles en el lugar señalado para ello (La palabra **answer** muestra donde).
 
-**Importante**:
-* Como la actividad es en las parejas del laboratorio, solo uno de los integrantes tiene que hacer el fork; y sobre repositorio bifurcado que se genera, la modificación se realiza en equipo.
-* Como la entrega se debe hacer modificando el archivo READNE, se recomienda que consulte mas sobre el lenguaje **Markdown**. En el repo adjuntan dos cheatsheet ([cheat sheet 1](Markdown_Cheat_Sheet.pdf), [cheatsheet 2](markdown-cheatsheet.pdf)) para consulta rapida.
-* Entre mas creativo mejor.
+> **⚠️ Importante**:
+> * Como la actividad es en las parejas del laboratorio, solo uno de los integrantes tiene que hacer el fork; y sobre repositorio bifurcado que se genera, la modificación se realiza en equipo.
+> * Como la entrega se debe hacer modificando el archivo README, se recomienda que consulte más sobre el lenguaje **Markdown**. En el repo adjuntan dos cheatsheet ([cheat sheet 1](Markdown_Cheat_Sheet.pdf), [cheatsheet 2](markdown-cheatsheet.pdf)) para consulta rápida.
+> * Entre más creativo mejor.
 
-## Homework (Simulation)
+## 📚 Homework (Simulation)
 
-This program, [`process-run.py`](process-run.py), allows you to see how process states change as programs run and either use the CPU (e.g., perform an add instruction) or do I/O (e.g., send a request to a disk and wait for it to complete). See the [README](https://github.com/remzi-arpacidusseau/ostep-homework/blob/master/cpu-intro/README.md) for details.
+Este programa, [`process-run.py`](process-run.py), permite ver cómo cambian los estados de los procesos a medida que los programas se ejecutan y utilizan la CPU (por ejemplo, realizan una instrucción de suma) o hacen I/O (por ejemplo, envían una solicitud a un disco y esperan a que se complete). Consulta el [README](https://github.com/remzi-arpacidusseau/ostep-homework/blob/master/cpu-intro/README.md) para obtener más detalles.
 
 ## ❓ Preguntas
 
@@ -263,6 +265,8 @@ En este caso, **permitir que el sistema cambie a otro proceso mientras uno está
 <details>
 <summary><b>📊 Respuesta</b></summary>
 
+Al ejecutar el comando:
+
 ```bash
 python3 process-run.py -l 1:0,4:100 -c -S SWITCH_ON_IO
 ```
@@ -314,6 +318,8 @@ Se genera la siguiente traza, que detalla el estado de los procesos en cada unid
 
 <details>
 <summary><b>📊 Respuesta</b></summary>
+
+Al ejecutar el comando:
 
 ```bash
 python3 process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -c -p -I IO_RUN_LATER
@@ -451,6 +457,6 @@ Esto es beneficioso en situaciones donde los procesos dependen fuertemente de I/
 </details>
    <br>
 
-### Criterios de evaluación
+### 🏆 Criterios de evaluación
 - [x] Despligue de los resultados y analisis claro de los resultados respecto a lo visto en la teoria.
 - [x] Creatividad y orden.
