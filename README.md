@@ -1,7 +1,12 @@
 # 🧪 Actividad de seguimiento - Simulación 1
 
 ![Universidad](https://img.shields.io/badge/Universidad-UdeA-green)
-
+[![Repositorio original](https://img.shields.io/badge/Repositorio%20original-GitHub-lightgrey?logo=github)](https://github.com/udea-so/actividad-simulacion1)
+![Python](https://img.shields.io/badge/Python-3.12.1-blue?logo=python&logoColor=white)
+![Estado](https://img.shields.io/badge/Estado-Finalizado-yellow)
+![Linux](https://img.shields.io/badge/SO-Linux-important?logo=linux)
+![VS Code](https://img.shields.io/badge/Editor-VS%20Code-blue?logo=visualstudiocode)
+![Última actualización](https://img.shields.io/badge/Última%20actualización-Abril%202025-orange)
 ## 👥 Integrantes
 
 |Integrante|correo|usuario github|
